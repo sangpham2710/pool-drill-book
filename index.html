@@ -288,243 +288,192 @@ dialog#linkd::backdrop{background:rgba(5,8,12,.55)}
 }
 
 /* ---------- the Routine page ----------
-   Practice first: the session bar, the block list, and in an open block the table, the one set or shot
-   you are on and the level ladder. Each block has its own color (--bc), and so does each side of the table. */
-:root{
-  --b-routine:#5f6f80; --b-warmup:#9a6200; --b-long:#2f6fe0; --b-cut:#8a4fd6; --b-ladder:#0f7d5c; --b-speed:#c24a0c; --on-b:#ffffff;
-  --side-0:#08778a; --side-1:#b8325f; --on-side:#ffffff;
-}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --b-routine:#a2b0c0; --b-warmup:#f0b440; --b-long:#77a8ff; --b-cut:#bb90f4; --b-ladder:#4fd39a; --b-speed:#ff9257; --on-b:#0b1220;
-  --side-0:#45c8dc; --side-1:#f47ea8; --on-side:#0b1a20}}
-:root[data-theme="dark"]{
-  --b-routine:#a2b0c0; --b-warmup:#f0b440; --b-long:#77a8ff; --b-cut:#bb90f4; --b-ladder:#4fd39a; --b-speed:#ff9257; --on-b:#0b1220;
-  --side-0:#45c8dc; --side-1:#f47ea8; --on-side:#0b1a20}
+   Drawn like the rest of the book: white sheets with thin rules, blue numbers, condensed titles, mono labels.
+   One color for the page; the only other two are the sides of the table, left and right. */
+:root{--side-0:#0b7285; --side-1:#b03a63}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--side-0:#4cc3d6; --side-1:#f27fa7}}
+:root[data-theme="dark"]{--side-0:#4cc3d6; --side-1:#f27fa7}
 
 /* the header steps back on pages without the library */
 body:not(.m-library) header.top{padding-bottom:12px}
 body:not(.m-library) header.top h1{font-size:clamp(30px,5vw,44px)}
+body:not(.m-library) .layout{margin-top:20px}
 
-section.rt{display:grid;gap:14px}
-.rt-head{display:grid;gap:10px}
-/* session length */
-.lens{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;padding:4px;border-radius:12px;background:var(--sheet);border:1px solid var(--rule);max-width:440px}
-.lenbtn{display:grid;gap:1px;justify-items:center;border:0;border-radius:9px;background:transparent;color:var(--ink);padding:7px 6px;cursor:pointer;font:inherit;min-height:44px}
-.lenbtn b{font:600 14px/1.2 var(--body)}
-.lenbtn small{font:500 12px/1.2 var(--body);color:var(--ink-2)}
-.lenbtn[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
-.lenbtn[aria-pressed="true"] small{color:inherit;opacity:.75}
-/* the session as one bar, a slice per block, as wide as its minutes */
-.sbar{display:flex;gap:4px;align-items:center}
-.sb{position:relative;height:30px;min-width:10px;border:0;padding:0;background:none;cursor:pointer;-webkit-tap-highlight-color:transparent}
-.sb::before,.sb i{content:"";position:absolute;left:0;top:10px;height:10px;border-radius:5px}
-.sb::before{right:0;background:color-mix(in srgb,var(--bc) 22%,transparent)}
-.sb i{background:var(--bc)}
-/* the block to do next, big */
-.next{display:grid;grid-template-columns:44px minmax(0,1fr) 22px;gap:14px;align-items:center;width:100%;text-align:left;border:0;border-radius:14px;padding:16px 18px;background:var(--bc);color:var(--on-b);cursor:pointer;font:inherit}
-.next .rb-n{width:44px;height:44px;font-size:24px;background:var(--on-b);color:var(--bc)}
-.next-t{display:grid;gap:2px;min-width:0}
-.next-t small{font:600 13px var(--body);opacity:.85}
-.next-t b{font:700 26px/1.05 var(--display);text-transform:uppercase;letter-spacing:.01em}
-.next svg{width:22px;height:22px}
-/* the block list */
-.rbs{list-style:none;margin:0;padding:0;display:grid;gap:8px}
-.rb{background:var(--sheet);border:1px solid var(--rule);border-radius:12px;overflow:hidden}
-.rb-head{all:unset;box-sizing:border-box;display:grid;grid-template-columns:36px minmax(0,1fr) auto;gap:12px;align-items:center;width:100%;padding:12px 16px;cursor:pointer;-webkit-tap-highlight-color:transparent}
-.rb-n{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:var(--bc);color:var(--on-b);font:800 19px/1 var(--display);flex:none}
-.rb-n svg{width:18px;height:18px}
-.rb-t{display:grid;gap:7px;min-width:0}
-.rb-t b{font:700 19px/1.05 var(--display);text-transform:uppercase;letter-spacing:.01em}
-.rb-m{display:block;height:4px;border-radius:2px;background:color-mix(in srgb,var(--bc) 18%,transparent);overflow:hidden;max-width:220px}
-.rb-m i{display:block;height:100%;background:var(--bc);border-radius:2px}
-.rb-s{font:600 14px var(--body);color:var(--ink-2);font-variant-numeric:tabular-nums}
+section.rt{display:grid;gap:14px;min-width:0}
+.kl{font:600 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);display:block}
+/* a label row, like YOUR SCORES on a drill card */
+.kh{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 10px}
+.kh b{font:600 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2)}
+.kh span{font:500 12px var(--mono);color:var(--ink-2)}
+.side{display:inline-flex;align-items:center;font:600 10.5px/1 var(--mono);letter-spacing:.05em;text-transform:uppercase;padding:4px 7px;border-radius:5px;white-space:nowrap;color:var(--side-0);background:color-mix(in srgb,var(--side-0) 13%,transparent)}
+.side.s1{color:var(--side-1);background:color-mix(in srgb,var(--side-1) 13%,transparent)}
 
-/* a block's page */
+/* ---------- overview ---------- */
+.rt-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px}
+.rt-h{font:800 28px/1 var(--display);text-transform:uppercase;letter-spacing:.01em;margin:0}
+.rt-sub{margin:6px 0 0;font:500 12.5px var(--mono);color:var(--ink-2)}
+.lens button small{font-weight:500;opacity:.7}
+.rbs{list-style:none;margin:0;padding:0;background:var(--sheet);border:1px solid var(--rule);border-radius:10px;overflow:hidden}
+.rb + .rb{border-top:1px solid var(--rule)}
+.rb-head{all:unset;box-sizing:border-box;display:grid;grid-template-columns:34px minmax(0,1fr) auto;gap:14px;align-items:center;width:100%;padding:13px 16px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.rb-head:hover{background:var(--chalk-soft)}
+.rb-n{font:800 30px/.8 var(--display);color:var(--chalk);text-align:center}
+.rb-n svg{width:22px;height:22px;color:var(--good);vertical-align:middle}
+.rb-t{display:grid;gap:4px;min-width:0}
+.rb-t b{font:700 19px/1.1 var(--display);text-transform:uppercase;letter-spacing:.01em}
+.rb-s{font:500 12px var(--mono);color:var(--ink-2);font-variant-numeric:tabular-nums}
+.rb-c{color:var(--ink-2);opacity:.6;display:grid}
+.rb-c svg{width:16px;height:16px}
+.rb-go{font:600 12px/1 var(--mono);letter-spacing:.04em;text-transform:uppercase;background:var(--ink);color:var(--paper);border-radius:999px;padding:9px 14px}
+.rb.next{box-shadow:inset 3px 0 0 var(--chalk)}
+.rb.done .rb-t b{color:var(--ink-2)}
+.rt-done{display:flex;gap:10px;align-items:flex-start;margin:0;padding:12px 14px;border-radius:10px;background:var(--good-soft);font-size:14px}
+.rt-done svg{width:18px;height:18px;flex:none;color:var(--good);margin-top:2px}
+.rt-done b{font-weight:600}
+.rt-more{display:grid;gap:4px;justify-items:start}
+.sync{margin:6px 0 0;font:500 12px var(--mono);color:var(--ink-2)}
+
+/* folded boxes: a mono line you tap, like Table and legend */
+details.fold > summary{cursor:pointer;font:500 12.5px var(--mono);color:var(--ink-2);min-height:36px;display:flex;align-items:center;gap:8px;width:max-content;max-width:100%;list-style:none}
+details.fold > summary::-webkit-details-marker{display:none}
+details.fold > summary::before{content:"";width:0;height:0;border-left:6px solid currentColor;border-block:4px solid transparent;transition:transform .12s}
+details.fold[open] > summary::before{transform:rotate(90deg)}
+.fold-b{display:grid;gap:10px;font-size:14px;padding:4px 0 10px}
+.fold-b p{margin:0}
+.fold-b h4{margin:6px 0 0;font:700 17px/1.1 var(--display);text-transform:uppercase;letter-spacing:.01em}
+.rt-more details.fold{width:100%}
+.rt-more .fold-b{background:var(--sheet);border:1px solid var(--rule);border-radius:10px;padding:14px 16px}
+ol.rules,ol.howto,.focus{margin:0;padding-left:22px;display:grid;gap:6px;color:var(--ink-2)}
+ol.rules li::marker,ol.howto li::marker{font:600 12px var(--mono);color:var(--chalk)}
+ol.rules li b{color:var(--ink);font-weight:600}
+
+/* ---------- a block's page ---------- */
 .rt-block{gap:12px}
-.bp-top{display:flex;align-items:center;justify-content:space-between}
-.bp-back{display:inline-flex;align-items:center;gap:6px;border:0;background:none;color:var(--chalk);font:600 14px var(--body);padding:0 4px 0 0;min-height:40px;cursor:pointer}
-.bp-back svg{width:16px;height:16px}
-.bp-of{font-size:13px;color:var(--ink-2)}
-.bp-name{display:flex;align-items:center;gap:12px;margin:0;font:800 30px/1.05 var(--display);text-transform:uppercase;letter-spacing:.01em}
-.steps{list-style:none;margin:0 0 4px;padding:0;display:flex;align-items:center;gap:0}
-.steps li > button,.steps li > .st{display:inline-flex;align-items:center;gap:7px;border:0;background:none;padding:4px 0;font:600 14px var(--body);color:var(--ink-2);cursor:default}
-.steps li > button{cursor:pointer;color:var(--ink)}
-.steps li > * > span{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font:700 13px var(--body);border:2px solid color-mix(in srgb,var(--bc) 40%,var(--rule));color:inherit}
-.steps li.on > .st{color:var(--ink)}
-.steps li.on > * > span{background:var(--bc);border-color:var(--bc);color:var(--on-b)}
-.steps li > button > span{border-color:var(--bc)}
-.steps i{flex:0 1 40px;min-width:12px;height:2px;margin:0 8px;background:color-mix(in srgb,var(--bc) 30%,var(--rule))}
-.bp-grid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:18px;align-items:start}
-.bp-side{display:grid;gap:12px;min-width:0}
-.bp-side h3{margin:4px 0 0;font:600 15px var(--body)}
-.rb-stick{position:sticky;top:calc(var(--barh,62px) + 12px);background:var(--rail);border-radius:12px;padding:8px;display:grid;grid-template-columns:minmax(0,1fr);gap:4px}
-.rb-stick .svgwrap{width:100%;position:relative;aspect-ratio:auto;min-height:60px}
-.rb-stick .svgwrap svg{display:block;width:100%;height:auto}
-.rb-tag{position:absolute;top:8px;left:8px;font:600 12px var(--body);color:#fff;background:rgba(10,14,18,.66);border-radius:6px;padding:4px 8px}
-.rb-tag.s0{background:var(--side-0);color:var(--on-side)}
-.rb-tag.s1{background:var(--side-1);color:var(--on-side)}
-.rb-big{justify-self:end;width:34px;height:34px;border-radius:8px;border:1px solid rgba(255,255,255,.28);background:transparent;color:#fff;display:grid;place-items:center;padding:0;cursor:pointer}
-.rb-big svg{width:15px;height:15px}
-/* set up: levels as a list you pick from */
-.levels{display:grid;gap:6px}
-.lv{display:grid;grid-template-columns:30px minmax(0,1fr);gap:12px;align-items:start;width:100%;text-align:left;border:1px solid var(--rule);border-radius:10px;background:var(--sheet);color:var(--ink);padding:10px 12px;cursor:pointer;font:inherit}
-.lv-n{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;border:2px solid color-mix(in srgb,var(--bc) 40%,var(--rule));font:700 14px var(--body);color:var(--ink-2)}
-.lv-t{display:grid;gap:4px;padding-top:3px}
-.lv-t b{font-weight:600;font-size:14.5px}
-.lv-t b small{font:600 11.5px var(--body);color:var(--bc);margin-left:6px}
-.lv-t span{font-size:13.5px;color:var(--ink-2)}
-.lv.on{border:2px solid var(--bc);padding:9px 11px;background:color-mix(in srgb,var(--bc) 6%,var(--sheet))}
-.lv.on .lv-n{background:var(--bc);border-color:var(--bc);color:var(--on-b)}
+.bp-back{justify-self:start;display:inline-flex;align-items:center;gap:6px;border:0;background:none;color:var(--chalk);font:600 12.5px var(--mono);padding:0 6px 0 0;min-height:36px;cursor:pointer}
+.bp-back svg{width:14px;height:14px}
+.bp-head .sec-num svg{width:38px;height:38px;color:var(--good)}
+.bp-head p{font:500 12.5px var(--mono)}
+.bp-sheet{align-items:start}
+.bp-board{align-self:stretch;justify-content:flex-start;gap:4px}
+.bp-board .svgwrap{aspect-ratio:auto;min-height:60px}
+.bp-board .svgwrap svg{height:auto}
+.bp-foot{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.bp-foot .zoom{position:static}
+.rb-tag{font:600 11.5px/1 var(--mono);letter-spacing:.03em;color:#d4dbe0;border:1px solid rgba(255,255,255,.22);border-radius:999px;padding:7px 10px}
+.bp-side{gap:14px}
+/* set up: the level, folded */
+.lvpick{border-bottom:1px solid var(--rule)}
+details.fold.lvpick > summary,.lvpick.one{display:flex;align-items:baseline;gap:10px;width:auto;min-height:40px;padding-bottom:8px;cursor:pointer;list-style:none;font:inherit;color:inherit}
+.lvpick.one{cursor:default}
+details.fold.lvpick > summary::before{display:none}
+.lvpick b{font:600 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);white-space:nowrap}
+.lv-now{font:700 19px/1.1 var(--display);text-transform:uppercase;letter-spacing:.01em;color:var(--ink);min-width:0}
+.chg{margin-left:auto;font:600 12px var(--mono);color:var(--chalk);text-decoration:underline;text-underline-offset:3px;white-space:nowrap}
+.lvpick[open] .chg{visibility:hidden}
+.lvpick .fold-b{padding:0 0 10px}
+.levels{display:grid;gap:1px}
+.lv{all:unset;box-sizing:border-box;display:grid;grid-template-columns:22px minmax(0,1fr) auto;gap:6px;align-items:baseline;padding:9px 8px;border-radius:6px;cursor:pointer;color:var(--ink-2);font:600 16px/1.2 var(--display);letter-spacing:.02em;text-transform:uppercase}
+.lv:hover{background:var(--chalk-soft);color:var(--ink)}
+.lv.on{background:var(--chalk-soft);color:var(--ink)}
+.lv-n{font:600 11px var(--mono);color:var(--chalk)}
+.lv small{font:600 10.5px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--good)}
+table.spots{border-collapse:collapse;width:100%;font:500 14px var(--body);font-variant-numeric:tabular-nums}
+table.spots th[scope="row"]{text-align:left;font-weight:400;color:var(--ink-2);padding:8px 10px 8px 0;vertical-align:top}
+table.spots td{padding:8px 10px 8px 0;font-weight:600;vertical-align:top}
+table.spots tr + tr > *{border-top:1px solid var(--rule)}
+table.spots thead th{text-align:left;padding:0 10px 6px 0}
+table.spots thead + tbody tr:first-child > *{border-top:1px solid var(--rule)}
+table.spots.two td{width:30%}
+table.spots tr.grp th{padding:12px 0 6px;text-align:left}
+.setup-p{margin:0;font-size:14.5px}
+.go{width:100%;font:600 13.5px var(--mono);letter-spacing:.03em;min-height:50px;border-radius:8px;border:1px solid var(--ink);background:var(--ink);color:var(--paper);cursor:pointer;padding:0 16px}
+.go:hover{opacity:.9}
 details.howplay{border-top:1px solid var(--rule);padding-top:4px}
-details.howplay summary{cursor:pointer;font-weight:600;min-height:40px;display:flex;align-items:center;color:var(--chalk)}
-details.howplay > div{display:grid;gap:10px;font-size:14px}
-details.howplay p{margin:0}
-details.howplay .focus{margin:0;padding-left:18px;display:grid;gap:5px}
-details.howplay .focus li::marker{color:var(--bc)}
-/* practice: the shot */
-.now{display:grid;gap:10px;padding:14px;border-radius:12px;background:color-mix(in srgb,var(--bc) 7%,var(--sheet));border:1px solid color-mix(in srgb,var(--bc) 28%,var(--rule))}
-.now-h{display:flex;align-items:center;justify-content:space-between;gap:8px;font:600 13px var(--body);color:var(--ink-2)}
-.now-h .ok{display:inline-flex;align-items:center;gap:6px;color:var(--ink)}
-.now-h .ok svg{width:14px;height:14px}
-.now-t{font:700 26px/1.05 var(--display);text-transform:uppercase;letter-spacing:.01em}
-.now-t.say{font:600 19px/1.3 var(--body);text-transform:none;letter-spacing:0}
-.now-s{font-size:14.5px;color:var(--ink-2);margin-top:-4px}
-.go{font:600 15px var(--body);min-height:50px;border-radius:12px;border:0;background:var(--bc);color:var(--on-b);cursor:pointer;padding:0 18px}
-.side{display:inline-flex;align-items:center;font:600 12px/1 var(--body);padding:5px 9px;border-radius:999px;color:var(--on-side);background:var(--side-0);white-space:nowrap}
-.side.mini{font-size:11px;padding:3px 7px;vertical-align:1px}
-.side.s1{background:var(--side-1)}
+details.howplay .fold-b{color:var(--ink)}
+.howplay b{font-weight:600}
+.focus li::marker{color:var(--chalk)}
+.rel{display:flex;flex-wrap:wrap;gap:6px}
+.rel button{font:600 12px var(--mono);border:1px solid var(--rule);background:var(--paper);color:var(--chalk);border-radius:7px;padding:0 10px;min-height:36px;cursor:pointer}
+.steps10{margin:0;padding:9px 11px 9px 34px;border:1px solid var(--rule);border-radius:8px;background:var(--paper);columns:2;column-gap:22px;font-size:13.5px}
+.steps10 li{break-inside:avoid;padding:1px 0}
+.steps10 li::marker{font:600 12px var(--mono);color:var(--chalk)}
+/* practice: one shot */
+.now{display:grid;gap:12px}
+.now-h{display:flex;align-items:center;justify-content:space-between;gap:8px;font:600 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2)}
+.pbar{height:3px;border-radius:2px;background:var(--rule);overflow:hidden;margin-top:-4px}
+.pbar i{display:block;height:100%;background:var(--chalk)}
+.now-t{font:700 28px/1.05 var(--display);text-transform:uppercase;letter-spacing:.01em;margin:0;text-wrap:balance}
+.now-t.long{font-size:23px}
+.now-s{margin:-6px 0 0;color:var(--ink-2)}
 .dk-btns{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .dk-btns.one{grid-template-columns:1fr}
-.dk-btn{font:700 16px var(--body);min-height:60px;border-radius:12px;border:1px solid var(--rule);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;-webkit-tap-highlight-color:transparent}
-.dk-btn svg{width:16px;height:16px}
+.dk-btn{font:600 14px var(--mono);letter-spacing:.04em;text-transform:uppercase;min-height:64px;border-radius:8px;border:1px solid var(--rule);background:var(--paper);color:var(--ink);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:9px;-webkit-tap-highlight-color:transparent}
+.dk-btn svg{width:15px;height:15px}
 .dk-btn.ok{background:var(--good);border-color:var(--good);color:var(--on-good)}
-.dk-btn.no{background:var(--sheet);color:var(--ink)}
+.dk-btn.no:hover{border-color:var(--ink-2)}
 .dk-btn:active{transform:translateY(1px)}
-.dk-trail{display:flex;flex-wrap:wrap;gap:3px}
-.dk-trail i{width:9px;height:9px;border-radius:2px;border:1.5px solid var(--rule)}
-.dk-trail i.ok{background:var(--good);border-color:var(--good)}
-.dk-trail i.no{border-color:var(--ink-2)}
-.now-f{display:flex;flex-wrap:wrap;gap:4px 14px;align-items:center;font-size:13.5px;color:var(--ink-2)}
-.now-f .undo{margin:0;padding:0;min-height:32px}
-.now-f .back{color:var(--ink)}
-.bp-lvl{margin:0;font-size:13.5px;color:var(--ink-2)}
-.link{border:0;background:none;padding:0 2px;color:var(--chalk);font:600 13.5px var(--body);text-decoration:underline;text-underline-offset:3px;cursor:pointer;min-height:32px}
-/* today's rate against the target */
-.rate{display:grid;gap:6px}
-.rate-bar{position:relative;height:8px;border-radius:4px;background:var(--rule)}
-.rate-bar i{position:absolute;left:0;top:0;bottom:0;width:var(--r);border-radius:4px;background:color-mix(in srgb,var(--bc) 55%,var(--rule))}
-.rate.on .rate-bar i{background:var(--bc)}
-.rate-bar b{position:absolute;left:var(--t);top:-4px;bottom:-4px;width:2px;margin-left:-1px;border-radius:1px;background:var(--ink)}
-.rate span{font-size:13px;color:var(--ink-2)}
-.rate strong{color:var(--ink);font-weight:600}
+.back{margin:-4px 0 0;font:500 12.5px var(--mono);color:var(--ink)}
+.now-f{display:flex;align-items:center;gap:6px 14px;font:500 12px var(--mono);color:var(--ink-2);border-top:1px solid var(--rule);padding-top:6px}
+.now-f span{flex:1}
+.now-f .undo{margin:0;padding:0 2px;min-height:36px}
 /* done */
-.fin2{display:grid;gap:14px;max-width:620px}
-.fin .now-t{font-size:34px}
-.fin2 .hint{margin:0;font-size:14.5px}
-.dk-today{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
-.dk-today span{font:500 13px var(--body);padding:4px 8px;border:1px solid var(--rule);border-radius:7px;background:var(--sheet);font-variant-numeric:tabular-nums}
-.dk-today span.miss{border-color:color-mix(in srgb,var(--ink-2) 55%,var(--rule))}
-.dk-today .side{border:0;padding:5px 9px;background:var(--side-0)}
-.dk-today .side.s1{background:var(--side-1)}
-table.spots{border-collapse:collapse;width:100%;font:500 14px var(--body);font-variant-numeric:tabular-nums}
-table.spots th{text-align:left;font:600 12.5px var(--body);color:var(--ink-2);padding:6px 8px 6px 0;border-bottom:1px solid var(--rule)}
-table.spots td{padding:7px 8px 7px 0;border-bottom:1px solid var(--rule);vertical-align:top}
-table.spots td:first-child{color:var(--ink-2)}
-table.spots td:last-child{font-weight:600}
-table.spots tr.grp th{padding-top:12px;border-bottom:0}
-.legend2{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:12.5px;color:var(--ink-2);margin:0}
-.legend2 span{display:inline-flex;align-items:center;gap:6px}
-.legend2 i.ln{width:20px;border-top:2px dashed #c49a1c}
-.legend2 i.dn{width:13px;height:13px;border-radius:50%;border:1.5px dashed var(--ink-2)}
-details.howto summary{cursor:pointer;font-weight:600;color:var(--chalk);min-height:36px;display:flex;align-items:center}
-details.howto ol{margin:0;padding-left:20px;display:grid;gap:6px;color:var(--ink-2);font-size:14px}
-.rel{display:flex;flex-wrap:wrap;gap:6px}
-.rel button{font:600 13px var(--body);border:1px solid var(--rule);background:var(--paper);color:var(--chalk);border-radius:8px;padding:0 10px;min-height:38px;cursor:pointer}
-.climb{display:flex;align-items:flex-start;gap:10px;margin:0;font-size:14.5px}
-.climb .dots{padding-top:4px;flex:none}
-.climb .dots{display:inline-flex;gap:4px}
-.climb .dots i{width:11px;height:11px;border-radius:50%;border:2px solid var(--bc)}
-.climb .dots i.on{background:var(--bc)}
-.sides{display:grid;gap:8px}
-.sd{display:grid;grid-template-columns:56px minmax(0,1fr) 44px 72px;gap:10px;align-items:center;font-size:13.5px}
-.sd .side{justify-content:center}
-.sd-bar{height:8px;border-radius:4px;background:var(--rule);overflow:hidden}
-.sd-bar i{display:block;height:100%;background:var(--side-0)}
-.sd.s1 .sd-bar i{background:var(--side-1)}
-.sd b{font-weight:600;text-align:right}
-.sd small{color:var(--ink-2);font-size:12.5px}
-.sd-note{margin:0;font-size:13.5px}
+.fin .now-t{font:800 56px/1 var(--display);display:flex;align-items:baseline;gap:4px}
+.fin .now-t small{font-size:28px;color:var(--ink-2)}
+.fin .now-t em{font:600 15px var(--mono);font-style:normal;color:var(--ink-2);margin-left:auto}
+.fin .now-t em.ok{color:var(--good)}
+.lr{margin:0;display:flex;flex-wrap:wrap;align-items:center;gap:6px;font:600 13px var(--mono);font-variant-numeric:tabular-nums}
+.lr > span:empty{width:10px}
+.climb{margin:0;font-size:14px;color:var(--ink-2)}
+.dk-today{display:flex;flex-wrap:wrap;gap:5px;align-items:center}
+.dk-today > span:not(.side){font:500 11.5px var(--mono);padding:4px 7px;border-radius:5px;background:var(--paper);border:1px solid var(--rule);color:var(--ink-2);font-variant-numeric:tabular-nums}
+.dk-today > span b{font-weight:600;color:var(--ink)}
+.dk-today > span.miss{border-color:color-mix(in srgb,var(--ink-2) 55%,var(--rule))}
 .cbars{display:grid;gap:6px}
 .cbars svg{display:block;width:100%;height:100px}
-.cbars small{font-size:12.5px;color:var(--ink-2)}
-.rt-more{display:grid;gap:10px;margin-top:6px}
-:is(.lenbtn,.sb,.next,.rb-big,.go,.dk-btn,.lv,.bp-back,.steps button,.link,.rel button):focus-visible{outline:2px solid var(--chalk);outline-offset:2px}
+.cbars small,.sides small{font-size:12.5px;color:var(--ink-2)}
+.cbars .side{justify-self:start}
+.sides{display:grid;gap:8px}
+.sd{display:grid;grid-template-columns:52px minmax(0,1fr) 44px;gap:10px;align-items:center}
+.sd .side{justify-content:center}
+.sd-bar{height:6px;border-radius:3px;background:var(--rule);overflow:hidden}
+.sd-bar i{display:block;height:100%;background:var(--side-0)}
+.sd.s1 .sd-bar i{background:var(--side-1)}
+.sd b{font:600 12.5px var(--mono);text-align:right}
+:is(.lens button,.rb-big,.go,.dk-btn,.lv,.bp-back,.rel button,details.fold > summary):focus-visible{outline:2px solid var(--chalk);outline-offset:2px}
 .rb-head:focus-visible{outline:2px solid var(--chalk);outline-offset:-2px}
-@media (max-width:760px){
-  .bp-grid{grid-template-columns:minmax(0,1fr);gap:14px}
-  .bp-board{margin:0 -16px}
-  .rb-stick{position:static;border-radius:0;padding:6px}
-  .bp-name{font-size:26px}
-  .rb-head{padding:11px 12px;gap:10px;grid-template-columns:34px minmax(0,1fr) auto}
-  .rb-t b{font-size:18px}
-  .now-t{font-size:24px}
-  .next-t b{font-size:23px}
-  .rb-big{width:40px;height:40px}
-  .sd{grid-template-columns:52px minmax(0,1fr) 40px}
-  .sd small{grid-column:2 / -1;margin-top:-6px}
-  .steps10{columns:1}
-}
 
-details.card{background:var(--sheet);border:1px solid var(--rule);border-radius:10px}
-details.card > summary{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;padding:13px 16px;cursor:pointer;list-style:none}
-details.card > summary::-webkit-details-marker{display:none}
-details.card > summary::before{content:"+";font:700 16px/1 var(--mono);color:var(--chalk);width:14px}
-details.card[open] > summary::before{content:"\2212"}
-details.card > summary b{font:700 20px/1.1 var(--display);text-transform:uppercase;letter-spacing:.01em}
-details.card > summary span{font-size:13px;color:var(--ink-2)}
-.psr-cols{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--rule)}
-.psr-cols > div{padding:14px 18px 16px}
-.psr-cols > div + div{border-left:1px solid var(--rule)}
-.psr h4,.rules h4{font:600 13px var(--body);color:var(--chalk);margin:0 0 10px}
-.psr ol,.rules ol{margin:0;padding-left:24px;display:grid;gap:9px}
-.psr li::marker,.rules li::marker{font:700 13px var(--mono);color:var(--chalk)}
-.psr li b,.rules li b{display:block;font-weight:600;font-size:15px}
-.psr li span,.rules li span{color:var(--ink-2);font-size:14px}
-.psr-dec{margin:0;padding:12px 18px;border-top:1px solid var(--rule);background:var(--chalk-soft);font-size:14px;border-radius:0 0 10px 10px}
-.psr-dec b{font-weight:600;color:var(--chalk);margin-right:6px}
-.rules{border-top:1px solid var(--rule);padding:14px 18px 16px}
-.rules p{margin:12px 0 0;font-size:14px;color:var(--ink-2)}
-.rules p.rules-intro{margin:0 0 12px}
-@media (max-width:760px){.psr-cols{grid-template-columns:1fr}.psr-cols > div + div{border-left:0;border-top:1px solid var(--rule)}}
-
+/* progress, inside its fold */
 .kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
-.kpi{background:var(--sheet);border:1px solid var(--rule);border-radius:10px;padding:12px 14px;display:grid;gap:5px;align-content:start;min-width:0}
-.kpi > span,.kl{font:600 12.5px var(--body);color:var(--ink-2);display:block}
-.kpi.wide{grid-column:1/-1;grid-template-columns:minmax(0,1.7fr) minmax(0,1fr);gap:8px 28px}
+.kpi{display:grid;gap:5px;align-content:start;min-width:0}
+.kpi.wide{grid-column:1/-1;grid-template-columns:minmax(0,1.7fr) minmax(0,1fr);gap:8px 28px;border-top:1px solid var(--rule);padding-top:12px}
 .kpi.wide > div{display:grid;gap:6px;align-content:start;min-width:0}
-.kpi b{font:700 30px/1 var(--body);font-variant-numeric:tabular-nums;letter-spacing:-.01em}
-.kpi b small{font:600 14px var(--body);color:var(--ink-2);margin-left:2px}
+.kpi b{font:800 34px/1 var(--display);font-variant-numeric:tabular-nums}
 .kpi > small{font-size:12.5px;color:var(--ink-2)}
 .strip{display:grid;grid-template-columns:repeat(14,minmax(0,22px));gap:4px;margin-top:2px}
 .strip i{aspect-ratio:1;border-radius:3px;background:var(--rule)}
 .strip i.on{background:var(--chalk)}
 .strip i.today{box-shadow:0 0 0 1.5px var(--sheet),0 0 0 3px var(--ink-2)}
 .tchart svg{display:block;width:100%;height:96px;overflow:visible}
-.tchart details{font-size:12.5px;color:var(--ink-2)}
-.tchart summary{cursor:pointer;width:max-content}
-.tchart table{border-collapse:collapse;margin-top:6px;font:500 12px var(--mono)}
-.tchart td,.tchart th{padding:2px 10px 2px 0;text-align:left}
-@media (max-width:760px){.kpi.wide{grid-template-columns:minmax(0,1fr);gap:14px}.kpi b{font-size:26px}.kpi{padding:11px 12px}}
 
-.rt-done{background:var(--good-soft);border:1px solid color-mix(in srgb,var(--good) 40%,var(--rule));border-radius:10px;padding:14px 16px;display:grid;gap:6px}
-.rt-done b{font:700 20px/1.1 var(--display);text-transform:uppercase;letter-spacing:.01em;display:flex;align-items:center;gap:8px;color:var(--good)}
-.rt-done b svg{width:18px;height:18px;flex:none}
-.rt-done p{margin:0;font-size:14px}
-.sync{font-size:12.5px;color:var(--ink-2);margin:0}
-
-.steps10{margin:0;padding:9px 11px 9px 34px;border:1px solid var(--rule);border-radius:8px;background:var(--paper);columns:2;column-gap:22px;font-size:13.5px}
-.steps10 li{break-inside:avoid;padding:1px 0}
-.steps10 li::marker{font:700 12px var(--mono);color:var(--chalk)}</style>
+@media (max-width:760px){
+  .rt-head{align-items:stretch;flex-direction:column}
+  .lens{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
+  .lens button{min-height:40px}
+  .rb-head{padding:12px 14px;gap:12px;grid-template-columns:28px minmax(0,1fr) auto}
+  .rb-n{font-size:27px}
+  .rb-t b{font-size:18px}
+  .bp-head{gap:2px 12px}
+  .bp-sheet .txt{padding:14px 16px 16px}
+  .bp-board{padding:6px}
+  .bp-foot .zoom{width:36px;height:36px}
+  .now-t{font-size:26px}
+  .now-t.long{font-size:22px}
+  .steps10{columns:1}
+  .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .kpi.wide{grid-template-columns:minmax(0,1fr);gap:14px}
+}
+@media (pointer:coarse){.dk-btn{min-height:68px}.lv{padding:11px 8px}}
+</style>
 
 </head>
 <body>
@@ -1246,11 +1195,10 @@ const tile = d => `<button class="tile" type="button" data-open="${esc(d.name)}"
 const row = d => `<button class="row" type="button" data-open="${esc(d.name)}"><span class="thumb" data-lazy="small"></span><span class="rt"><h3>${esc(d.name)}</h3><p class="rp">${esc(d.purpose)}</p></span><span class="rside">${meter(rOf(d))}<span class="tagrow"><span class="tag1">${esc(SK[d.trains[0]].label)}</span>${passTag(d)}</span></span></button>`;
 
 /* ---------- the daily routine ----------
-   Two screens. The overview: session length, the session bar and one row per block.
-   A block's own page, in the same three steps for every block:
-     1 Set up: the whole table with every donut, the level to play, then Start;
-     2 Practice: one shot at a time, Made or Missed (Done for a task like shadow strokes);
-     3 Done: the score against the target, each side, and what happens to the level.
+   Two screens, drawn like the rest of the book. The overview: today's blocks as one list, the next one marked.
+   A block's own page: its table on the rail and one panel beside it, showing one thing at a time:
+     set up (where the balls go, Start), then one shot at a time (Made or Missed, Done for a task), then done.
+   The level and the how-to stay folded until you want them.
    Every block runs on the same shot list ("queue"): a deck deals its shots shuffled, weak ones more often;
    a groove block (warm-up, long straights) runs its sets in order, one card per set. */
 const RT = window.DRILLS.routine, RB = RT.blocks, RBy = Object.fromEntries(RB.map(b=>[b.id,b]));
@@ -1260,8 +1208,8 @@ let rtLen = store.get('drillbook.rtlen'); if (!LENS[rtLen]) rtLen = 'daily';
 let rtOpen = '';
 // a step picked by hand (Set up while practising), per block, for this visit
 const rtStep = {};
-// explainer boxes remember a choice only once you tap them
-const folds = { psr: store.get('drillbook.psr'), rules: store.get('drillbook.rules'), howto: store.get('drillbook.howto'), prog: store.get('drillbook.prog') }, keep = { psr: 1, rules: 1, howto: 1, prog: 1 };
+// folded boxes: the overview's remember a choice once you tap them, a block's stay as you left them for this visit
+const folds = { how: store.get('drillbook.how'), prog: store.get('drillbook.prog') }, keep = { how: 1, prog: 1 };
 let foldTap = null;
 const phone = window.matchMedia ? window.matchMedia('(max-width: 760px)') : { matches: false };
 const textK = () => phone.matches ? 1.7 : 1;
@@ -1415,91 +1363,88 @@ function stepOf(b, e){
 const fracOf = (b, e) => !e || e.pre || !e.q.length ? 0 : Math.min(1, e.d.length / e.q.length);
 
 /* ---------- pieces ---------- */
+const BACK = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 3L5 8l5 5"/></svg>';
+const CHEV = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3l5 5-5 5"/></svg>';
+// a folded box, shut until you tap it
+const fold = (id, sum, body, cls) => `<details class="fold${cls ? ' ' + cls : ''}" data-fold="${id}"${folds[id] === 'open' ? ' open' : ''}><summary>${sum}</summary><div class="fold-b">${body}</div></details>`;
+const sideChip = (s, word) => s == null ? '' : `<span class="side s${s}">${s ? 'Right' : 'Left'}${word ? ' side' : ''}</span>`;
 // the level rule in words, for the Done step
 function hintFor(b, L, e){
   const st = stat(b, e), U = pct(upR(b)), D = pct(downR(b));
   if (st.done) {
     const c = climb(b, pastSessions(b.id, null)), r = rateOf(st);
-    if (c.move > 0) return `Three sessions in a row at ${U} or better: next time this block moves up to level ${c.lvl}.`;
-    if (c.move < 0) return `Two rough sessions in a row: next time it steps down to level ${c.lvl}, so the reps are clean again.`;
+    if (c.move > 0) return `Three sessions in a row at ${U} or better: level ${c.lvl} next time.`;
+    if (c.move < 0) return `Two rough sessions in a row: level ${c.lvl} next time, to get the reps clean again.`;
     if (r >= upR(b)) return `${c.up} of 3 sessions in a row at ${U} or better. Three moves you up a level.`;
     if (r >= b.rate) return `On target. ${U} three sessions in a row moves you up a level.`;
-    return `Under the ${pct(b.rate)} target. Slow down and go through How to play before the next session.`;
+    return `Under the ${pct(b.rate)} target. Read How to play before the next session.`;
   }
   if (L.move > 0) return `New level today: you made ${U} or better three sessions in a row.`;
-  if (L.move < 0) return `One level easier today after two rough sessions. Get the reps clean and it climbs back.`;
+  if (L.move < 0) return `One level easier today after two rough sessions.`;
   if (L.lvl >= L.max) return `Top level. Keep it at ${pct(b.rate)} or better.`;
-  return `Up a level after 3 sessions in a row at ${U} or better, down after 2 under ${D}.${L.up ? ` ${L.up} of 3 so far.` : ''}`;
+  return `Up a level after 3 sessions in a row at ${U} or better, down after 2 under ${D}.`;
 }
-// every spot is a named spot or the crossing of two diamond lines, read as "along · up" from your long rail
+// where the balls and donuts go, read as "along · up" from your long rail. Targets are not donuts:
+// each shot shows its own. A mirrored level gets a Left and a Right column
 function spotTable(b, lv){
-  if (!lv.spots || !lv.spots.length) return '';
-  const tr = x => `<tr><td>${esc(x.name)}</td><td${x.line ? ' class="ln"' : ''}>${esc(x.at)}</td></tr>`;
-  const both = !!lv.spotsR, group = (t, s) => `<tr class="grp"><th colspan="2"><span class="side s${s}">${t}</span></th></tr>`;
-  const body = (both ? group('Left side', 0) : '') + (lv.rows || lv.spots).map(tr).join('') + (both ? group('Right side', 1) + (lv.rowsR || lv.spotsR).map(tr).join('') : '');
-  return `<table class="spots"><thead><tr><th>Ball or donut</th><th>Along · Up</th></tr></thead><tbody>${body}</tbody></table>`;
+  const keep = r => !/^Target/.test(r.name);
+  const L = (lv.rows || lv.spots || []).filter(keep); if (!L.length) return '';
+  const R = lv.spotsR ? (lv.rowsR || lv.spotsR).filter(keep) : null;
+  const td = x => `<td${x.line ? ' class="ln"' : ''}>${esc(x.at)}</td>`, th = x => `<th scope="row">${esc(x.name)}</th>`;
+  if (!R) return `<table class="spots"><tbody>${L.map(x => `<tr>${th(x)}${td(x)}</tr>`).join('')}</tbody></table>`;
+  if (R.length === L.length && R.every((r, i) => r.name === L[i].name))
+    return `<table class="spots two"><thead><tr><td></td><th scope="col">${sideChip(0)}</th><th scope="col">${sideChip(1)}</th></tr></thead><tbody>${L.map((x, i) => `<tr>${th(x)}${R[i].at === x.at ? `<td colspan="2"${x.line ? ' class="ln"' : ''}>${esc(x.at)}</td>` : td(x) + td(R[i])}</tr>`).join('')}</tbody></table>`;
+  const grp = (s, rows) => `<tr class="grp"><th colspan="2">${sideChip(s, 1)}</th></tr>` + rows.map(x => `<tr>${th(x)}${td(x)}</tr>`).join('');
+  return `<table class="spots"><tbody>${grp(0, L)}${grp(1, R)}</tbody></table>`;
 }
 // make rate by shot over the last 12 sessions; a mirrored level gets one chart per side
 function cardBars(b, lv){
   const st = cardStats(b, null); if (!lv.cards.some(c=>st[c.id])) return '';
-  const chart = cards => {
-    const W = 320, H = 100, top = 14, base = H - 26, slot = W / cards.length, bw = Math.min(22, slot * 0.6);
+  const chart = (cards, s) => {
+    const W = 320, H = 100, top = 14, base = H - 26, slot = W / cards.length, bw = Math.min(22, slot * 0.6), fill = s == null ? 'var(--chalk)' : `var(--side-${s})`;
     let svg = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Make rate by shot, last 12 sessions"><line x1="0" x2="${W}" y1="${base}" y2="${base}" stroke="var(--rule)"/>`;
     cards.forEach((c, i) => {
-      const x = st[c.id], r = x ? x.m / x.t : 0, cx = i * slot + slot / 2, yy = base - (base - top) * r, h = base - yy, rr = Math.min(4, h, bw / 2), x0 = cx - bw / 2;
-      if (x && h > 0) svg += `<path d="M${x0} ${base}V${yy + rr}Q${x0} ${yy} ${x0 + rr} ${yy}H${x0 + bw - rr}Q${x0 + bw} ${yy} ${x0 + bw} ${yy + rr}V${base}Z" fill="var(--bc)"/>`;
+      const x = st[c.id], r = x ? x.m / x.t : 0, cx = i * slot + slot / 2, yy = base - (base - top) * r, h = base - yy, rr = Math.min(3, h, bw / 2), x0 = cx - bw / 2;
+      if (x && h > 0) svg += `<path d="M${x0} ${base}V${yy + rr}Q${x0} ${yy} ${x0 + rr} ${yy}H${x0 + bw - rr}Q${x0 + bw} ${yy} ${x0 + bw} ${yy + rr}V${base}Z" fill="${fill}"/>`;
       const [l1, l2] = String(c.short || c.id.replace(/^m/, '')).split(' ');
       svg += `<text x="${cx}" y="${H - 15}" text-anchor="middle" font-size="10" font-family="var(--mono)" fill="var(--ink-2)">${esc(l1)}</text>${l2 ? `<text x="${cx}" y="${H - 4}" text-anchor="middle" font-size="9.5" font-family="var(--mono)" fill="var(--ink-2)">${esc(l2)}</text>` : ''}`;
-      if (x) svg += `<text x="${cx}" y="${yy - 3}" text-anchor="middle" font-size="9.5" font-family="var(--body)" font-weight="600" fill="var(--ink)">${Math.round(r * 100)}</text>`;
+      if (x) svg += `<text x="${cx}" y="${yy - 3}" text-anchor="middle" font-size="9.5" font-family="var(--mono)" font-weight="600" fill="var(--ink)">${Math.round(r * 100)}</text>`;
       svg += `<rect x="${i * slot}" y="0" width="${slot}" height="${H}" fill="transparent" data-tip="${esc(c.name)}: ${x ? `${x.m} of ${x.t} made` : 'no shots yet'}"/>`;
     });
     return svg + '</svg>';
   };
   const left = lv.cards.filter(c=>!c.side), right = lv.cards.filter(c=>c.side);
-  const charts = right.length ? `<span class="kl">Left side</span>${chart(left)}<span class="kl">Right side</span>${chart(right)}` : chart(left);
-  return `<div class="cbars"><span class="kl">Made, by shot, in % (last 12 sessions)</span>${charts}<small>The page deals the low ones more often.</small></div>`;
+  const charts = right.length ? `${sideChip(0, 1)}${chart(left, 0)}${sideChip(1, 1)}${chart(right, 1)}` : chart(left);
+  return `<div class="cbars"><span class="kl">Made by shot, in %, last 12 sessions</span>${charts}<small>The low ones are dealt more often.</small></div>`;
 }
-// left against right, today and over the last 12 sessions, so a favourite side shows up
-function sideLine(b, lv, e){
+// left against right over the last 12 sessions, so a favourite side shows up
+function sideLine(b, lv){
   if (!lv.tR) return '';
-  const tally = () => [[0, 0], [0, 0]], today = tally(), past = tally();
-  const scan = (en, acc) => {
+  const past = [[0, 0], [0, 0]];
+  const scan = en => {
     if (!en) return;
-    if (isDeck(b)) (en.d || []).forEach(([c, m]) => { const a = acc[String(c)[0] === 'm' ? 1 : 0]; a[0] += m; a[1]++; });
-    else if (en.alt) setsOf(b, volOf(en)).forEach((x, si) => { if (!x.check && filled(en, si)) { const a = acc[x.side || 0]; a[0] += en.s[si]; a[1] += x.reps; } });
+    if (en.d) en.d.forEach(([c, m]) => { if (isCheck(c)) return; const a = past[String(c)[0] === 'm' ? 1 : 0]; a[0] += m; a[1]++; });
+    else if (en.alt) setsOf(b, volOf(en)).forEach((x, si) => { if (!x.check && filled(en, si)) { const a = past[x.side || 0]; a[0] += en.s[si]; a[1] += x.reps; } });
   };
-  scan(e, today);
-  Object.keys(prog.rt.days).sort().slice(-12).forEach(k => scan(entryOf(k, b.id), past));
+  Object.keys(prog.rt.days).sort().slice(-12).forEach(k => scan(entryOf(k, b.id)));
   if (!past[0][1] && !past[1][1]) return '';
   const r = a => a[1] ? a[0] / a[1] : null;
-  const bar = (s, a, t) => `<div class="sd s${s}"><span class="side s${s}">${s ? 'Right' : 'Left'}</span><div class="sd-bar"><i style="width:${r(a) == null ? 0 : (100 * r(a)).toFixed(1)}%"></i></div><b>${r(a) == null ? 'none' : pct(r(a))}</b><small>${t[1] ? `${t[0]}/${t[1]} today` : ''}</small></div>`;
+  const bar = s => `<div class="sd s${s}">${sideChip(s)}<div class="sd-bar"><i style="width:${r(past[s]) == null ? 0 : (100 * r(past[s])).toFixed(1)}%"></i></div><b>${r(past[s]) == null ? '-' : pct(r(past[s]))}</b></div>`;
   const gap = r(past[0]) != null && r(past[1]) != null && past[0][1] >= 10 && past[1][1] >= 10 ? Math.round(100 * (r(past[0]) - r(past[1]))) : 0;
-  const note = Math.abs(gap) >= 10 ? `<p class="sd-note">Your ${gap > 0 ? 'right' : 'left'} side is ${Math.abs(gap)} points behind${isDeck(b) ? ', so its shots come up more often' : ''}.</p>` : '';
-  return `<div class="sides"><span class="kl">Left against right, last 12 sessions</span>${bar(0, past[0], today[0])}${bar(1, past[1], today[1])}${note}</div>`;
-}
-// today's make rate as a bar, the target marked on it
-function rateBar(b, st){
-  if (!st.tried) return '';
-  const r = rateOf(st), P = v => (100 * v).toFixed(1) + '%';
-  return `<div class="rate${r >= b.rate ? ' on' : ''}" style="--r:${P(r)};--t:${P(b.rate)}"><div class="rate-bar" aria-hidden="true"><i></i><b></b></div><span><strong>${pct(r)}</strong> made today, target ${pct(b.rate)}</span></div>`;
-}
-const sideChip = s => s == null ? '' : `<span class="side s${s}">${s ? 'Right side' : 'Left side'}</span>`;
-// after a session: three dots for the three sessions in a row that move a block up, and what happens next time
-function levelLine(b, L, e){
-  const c = climb(b, pastSessions(b.id, null)), up = c.move > 0 ? 3 : c.up;
-  const dots = L.lvl >= L.max && c.move >= 0 ? '' : `<span class="dots">${[0, 1, 2].map(i=>`<i class="${i < up ? 'on' : ''}"></i>`).join('')}</span>`;
-  return `<p class="climb">${dots}<span>${hintFor(b, L, e)}</span></p>`;
+  const note = Math.abs(gap) >= 10 ? `<small>Your ${gap > 0 ? 'right' : 'left'} side is ${Math.abs(gap)} points behind${isDeck(b) ? ', so its shots come up more often' : ''}.</small>` : '';
+  return `<div class="sides"><span class="kl">Left against right, last 12 sessions</span>${bar(0)}${bar(1)}${note}</div>`;
 }
 // the setup map of a deck: only where the balls and donuts go. Targets and shot lines belong to each shot
 const mapOf = t => Object.assign({}, t, { zones: (t.zones || []).filter(z => z.type === 'circle' && z.dash), paths: [], notes: [], cues: [], ghosts: [] });
 // the table for a block right now: the whole setup, or the one shot being played
 function boardOf(b, e, lv, step){
   const cc = step === 'play' ? curCard(b, e, lv) : null;
-  if (cc) return { t: cc.t, tag: cc.side == null ? '' : cc.side ? 'Right side' : 'Left side', name: cc.name };
+  if (cc) return { t: cc.t, tag: cc.side == null ? '' : cc.side ? 'Right side' : 'Left side', name: cc.name, play: 1 };
   const t = lv.tAll || lv.t;
   return { t: isDeck(b) ? mapOf(t) : t, tag: lv.tAll ? 'Both sides' : b.setup ? 'Example' : '' };
 }
-const board = (b, bd) => `<div class="rb-stick"><div class="svgwrap" data-rz="${b.id}">${P.render(Object.assign({ title: b.name }, bd.t), { text: textK() })}${bd.tag ? `<span class="rb-tag${bd.tag === 'Left side' ? ' s0' : bd.tag === 'Right side' ? ' s1' : ''}">${bd.tag}</span>` : ''}</div><button type="button" class="rb-big" data-rz="${b.id}" aria-label="Enlarge the table">${ZOOM}</button></div>`;
+// the table on the dark rail, like a drill card; under it the tag (the shot card names the side while you play) and the zoom
+const board = (b, bd) => `<div class="board bp-board"><div class="svgwrap" data-rz="${b.id}">${P.render(Object.assign({ title: b.name }, bd.t), { text: textK() })}</div><div class="bp-foot">${bd.tag && !bd.play ? `<span class="rb-tag">${bd.tag}</span>` : '<span></span>'}<button type="button" class="zoom rb-big" data-rz="${b.id}" aria-label="Enlarge the table">${ZOOM}</button></div></div>`;
 function longChart(){
   const b = RBy.long, pts = Object.keys(prog.rt.days).sort().map(k=>({ k, e: entryOf(k, 'long') })).filter(x=>x.e && stat(b, x.e).done).slice(-20);
   if (!pts.length) return `<small>Your long straight shot score shows up here after you finish that block.</small>`;
@@ -1509,65 +1454,78 @@ function longChart(){
   svg += `<line x1="0" x2="${W}" y1="${base}" y2="${base}" stroke="var(--rule)" stroke-width="1"/>`;
   svg += `<line x1="0" x2="${W}" y1="${ty}" y2="${ty}" stroke="var(--ink-2)" stroke-width="1" stroke-dasharray="3 3" opacity=".7"/><text x="${W}" y="${ty - 4}" text-anchor="end" font-size="10" font-family="var(--mono)" fill="var(--ink-2)">target ${pct(b.rate)}</text>`;
   pts.forEach((p, i) => {
-    const st = stat(b, p.e), v = rateOf(st), x = i * slot + (slot - bw) / 2, yy = y(v), h = base - yy, r = Math.min(4, h, bw / 2);
+    const st = stat(b, p.e), v = rateOf(st), x = i * slot + (slot - bw) / 2, yy = y(v), h = base - yy, r = Math.min(3, h, bw / 2);
     if (h > 0) svg += `<path d="M${x} ${base}V${yy + r}Q${x} ${yy} ${x + r} ${yy}H${x + bw - r}Q${x + bw} ${yy} ${x + bw} ${yy + r}V${base}Z" fill="var(--chalk)"/>`;
     svg += `<rect x="${i * slot}" y="0" width="${slot}" height="${H}" fill="transparent" data-tip="${esc(fmtKey(p.k))} · ${st.made}/${st.max} (${pct(v)}) · level ${p.e.lvl || 1}"/>`;
   });
   const last = stat(b, pts[pts.length-1].e), lastX = (pts.length - 1) * slot + slot / 2;
-  svg += `<text x="${lastX}" y="${y(rateOf(last)) - 5}" text-anchor="middle" font-size="11" font-weight="700" font-family="var(--body)" fill="var(--ink)">${pct(rateOf(last))}</text>`;
+  svg += `<text x="${lastX}" y="${y(rateOf(last)) - 5}" text-anchor="middle" font-size="11" font-weight="600" font-family="var(--mono)" fill="var(--ink)">${pct(rateOf(last))}</text>`;
   svg += `<text x="0" y="${H - 2}" font-size="10" font-family="var(--mono)" fill="var(--ink-2)">${esc(fmtKey(pts[0].k))}</text></svg>`;
-  return svg + `<details><summary>Show as a table</summary><table><tr><th>Date</th><th>Made</th><th>Level</th></tr>${pts.map(p=>{ const st = stat(b, p.e); return `<tr><td>${esc(fmtKey(p.k))}</td><td>${st.made}/${st.max} (${pct(rateOf(st))})</td><td>${p.e.lvl || 1}</td></tr>`; }).join('')}</table></details>`;
+  return svg;
+}
+// everything about how to play a block, folded: the point, this level, what counts, the usual faults, finding a spot
+function howPlay(b, lv){
+  const rel = b.related.filter(nm=>byNm.has(nm));
+  return fold('hp-' + b.id, 'How to play', `<p>${esc(b.what)}</p>${lv.desc ? `<p><b>This level.</b> ${esc(lv.desc)}</p>` : ''}
+    ${b.id === 'routine' ? `<ol class="steps10">${RT.preshot.think.concat(RT.preshot.act).map(x=>`<li>${esc(x[0])}</li>`).join('')}</ol>` : ''}
+    <p><b>Made means</b> ${esc(b.counts)}</p><ul class="focus">${b.focus.map(f=>`<li>${esc(f)}</li>`).join('')}</ul><p><b>Usual faults.</b> ${esc(b.fixes)}</p>
+    ${lv.spots && lv.spots.length ? `<p><b>Finding a spot.</b></p><ol class="howto">${RT.howto.map(t=>`<li>${esc(t)}</li>`).join('')}</ol>` : ''}
+    ${rel.length ? `<div class="rel">${rel.map(nm=>`<button type="button" data-open="${esc(nm)}">${esc(nm)}</button>`).join('')}</div>` : ''}`, 'howplay');
 }
 
-/* ---------- a block's page: Set up, Practice, Done ---------- */
+/* ---------- a block's page: set up, then one shot at a time, then done ---------- */
 function setupStep(b, e, L, lv){
   const n = e ? e.q.filter(id => !isCheck(id)).length : stat(b, null).max, live = e && !e.pre && e.d.length;
-  const levels = b.levels.map((x, i) => { const on = i + 1 === L.lvl;
-    return `<button type="button" class="lv${on ? ' on' : ''}" data-lvset="${b.id}:${i + 1}" aria-pressed="${on}"><span class="lv-n">${i + 1}</span><span class="lv-t"><b>${esc(x.name)}${i + 1 === L.rec && b.levels.length > 1 ? ' <small>your level</small>' : ''}</b>${on ? `<span>${esc(x.desc)}</span>` : ''}</span></button>`; }).join('');
-  const rel = b.related.filter(nm=>byNm.has(nm));
-  const legend = lv.spots ? `<p class="legend2"><span><i class="ln"></i>Sight line, diamond to diamond</span><span><i class="dn"></i>Donut</span></p>` : '';
-  const where = lv.spots ? `<h3>Put the donuts down</h3>${spotTable(b, lv)}${legend}<details class="howto" data-fold="hw-${b.id}"${folds['hw-' + b.id] === 'open' ? ' open' : ''}><summary>How to find a spot</summary><ol>${RT.howto.map(t=>`<li>${esc(t)}</li>`).join('')}</ol></details>`
-    : `<h3>Set up</h3><p>${esc(b.setup || '')}</p>`;
-  const how = `<details class="howplay" data-fold="hp-${b.id}"${folds['hp-' + b.id] === 'open' ? ' open' : ''}><summary>How to play</summary><div><p>${esc(b.what)}</p>${b.id === 'routine' ? `<ol class="steps10">${RT.preshot.think.concat(RT.preshot.act).map(x=>`<li>${esc(x[0])}</li>`).join('')}</ol>` : ''}<p><b>Made means</b> ${esc(b.counts)}</p><ul class="focus">${b.focus.map(f=>`<li>${esc(f)}</li>`).join('')}</ul><p><b>Usual faults</b> ${esc(b.fixes)}</p>${rel.length ? `<div class="rel">${rel.map(nm=>`<button type="button" data-open="${esc(nm)}">${esc(nm)}</button>`).join('')}</div>` : ''}</div></details>`;
-  return `<div class="bp-grid"><div class="bp-board">${board(b, boardOf(b, e, lv, 'setup'))}</div>
-    <div class="bp-side"><h3>Level</h3><div class="levels">${levels}</div>${where}
-      <button type="button" class="go" data-dks="${b.id}">${live ? 'Back to practice' : `Start, ${n} shots`}</button>${how}</div></div>`;
+  // the level is picked from your history, so the list stays folded until you want another one
+  const list = b.levels.map((x, i) => { const on = i + 1 === L.lvl;
+    return `<button type="button" class="lv${on ? ' on' : ''}" data-lvset="${b.id}:${i + 1}" aria-pressed="${on}"><span class="lv-n">${i + 1}</span><span class="lv-t">${esc(x.name)}</span>${i + 1 === L.rec ? '<small>your level</small>' : ''}</button>`; }).join('');
+  const level = b.levels.length > 1 ? fold('lv-' + b.id, `<b>Level ${L.lvl}</b><span class="lv-now">${esc(lv.name)}</span><span class="chg">Change</span>`, `<div class="levels">${list}</div>`, 'lvpick')
+    : `<div class="lvpick one"><b>Level 1</b><span class="lv-now">${esc(lv.name)}</span></div>`;
+  const where = lv.spots && lv.spots.length ? `<div class="kh"><b>Set up</b><span>along · up, in diamonds</span></div>${spotTable(b, lv)}`
+    : `<div class="kh"><b>Set up</b></div><p class="setup-p">${esc(b.setup || '')}</p>`;
+  return `<div class="drill bp-sheet">${board(b, boardOf(b, e, lv, 'setup'))}
+    <div class="txt bp-side">${level}${where}
+      <button type="button" class="go" data-dks="${b.id}">${live ? 'Back to practice' : `Start · ${n} shots`}</button>${howPlay(b, lv)}</div></div>`;
 }
 function playStep(b, e, L, lv){
   const st = stat(b, e), cards = cardsOf(b, lv, volOf(e)), byId = Object.fromEntries(cards.map(c=>[c.id, c]));
-  const i = e.d.length, n = e.q.length, cur = byId[e.q[i]] || cards[0], nx = byId[e.q[i+1]], last = e.d[e.d.length-1];
-  const nm = id => (byId[id] || {}).name || id;
-  const trail = e.d.map(r=>`<i class="${isCheck(r[0]) ? 'ok' : r[1] ? 'ok' : 'no'}" data-tip="${esc(nm(r[0]))}: ${r[1] ? 'made' : 'missed'}"></i>`).join('') + '<i></i>'.repeat(Math.max(0, n - i));
-  const back = last && last.length > 3 ? `<span class="back">${esc(nm(last[0]))} comes back in 3 shots</span>` : '';
+  const i = e.d.length, n = e.q.length, cur = byId[e.q[i]] || cards[0], last = e.d[e.d.length-1];
+  const back = last && last.length > 3 ? `<p class="back">Missed. It comes back in 3 shots.</p>` : '';
   const btns = cur.check ? `<div class="dk-btns one"><button type="button" class="dk-btn ok" data-dk="${b.id}:1">${CHECK}Done</button></div>`
-    : `<div class="dk-btns"><button type="button" class="dk-btn ok" data-dk="${b.id}:1">${CHECK}Made</button><button type="button" class="dk-btn no" data-dk="${b.id}:0"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3l6 6M9 3l-6 6"/></svg>Missed</button></div>`;
-  return `<div class="bp-grid"><div class="bp-board">${board(b, boardOf(b, e, lv, 'play'))}</div>
-    <div class="bp-side"><div class="now dk-card" aria-live="polite"><div class="now-h"><span>Shot ${i+1} of ${n}</span>${sideChip(cur.side)}</div><b class="now-t${cur.name.length > 26 ? ' say' : ''}">${esc(cur.name)}</b>${cur.label ? `<span class="now-s">${esc(cur.label)}</span>` : ''}
-      ${btns}<div class="dk-trail" aria-label="Results so far">${trail}</div>
-      <div class="now-f">${i ? `<button type="button" class="undo" data-dku="${b.id}">Undo</button>` : ''}${back}${nx && nx.id !== cur.id ? `<span class="nx">Next: ${esc(nx.name)}${nx.side != null ? ` <span class="side mini s${nx.side}">${nx.side ? 'right' : 'left'}</span>` : ''}</span>` : ''}</div></div>
-      ${rateBar(b, st)}<p class="bp-lvl">Level ${L.lvl}, ${esc(lv.name)} <button type="button" class="link" data-rtstep="${b.id}:setup">Change</button></p></div></div>`;
+    : `<div class="dk-btns"><button type="button" class="dk-btn ok" data-dk="${b.id}:1">${CHECK}Made</button><button type="button" class="dk-btn no" data-dk="${b.id}:0"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 3l6 6M9 3l-6 6"/></svg>Missed</button></div>`;
+  return `<div class="drill bp-sheet">${board(b, boardOf(b, e, lv, 'play'))}
+    <div class="txt bp-side"><div class="now dk-card" aria-live="polite">
+      <div class="now-h"><span>Shot ${i + 1} / ${n}</span>${sideChip(cur.side, 1)}</div>
+      <div class="pbar" aria-hidden="true"><i style="width:${(100 * i / n).toFixed(1)}%"></i></div>
+      <h3 class="now-t${cur.name.length > 24 ? ' long' : ''}">${esc(cur.name)}</h3>${cur.label ? `<p class="now-s">${esc(cur.label)}</p>` : ''}
+      ${btns}${back}
+      <div class="now-f">${i ? `<button type="button" class="undo" data-dku="${b.id}">Undo</button>` : ''}<span>${st.tried ? `${st.made} of ${st.tried} made` : ''}</span><button type="button" class="undo" data-rtstep="${b.id}:setup">Set up</button></div>
+    </div></div></div>`;
 }
 function doneStep(b, e, L, lv, nxt){
-  const st = stat(b, e), by = {};
-  e.d.forEach(([c, m]) => { if (isCheck(c)) return; const x = by[c] || (by[c] = [0, 0]); x[0] += m; x[1]++; });
+  const st = stat(b, e), r = rateOf(st), by = {}, sd = [[0, 0], [0, 0]];
+  e.d.forEach(([c, m]) => { if (isCheck(c)) return; const x = by[c] || (by[c] = [0, 0]); x[0] += m; x[1]++; const a = sd[String(c)[0] === 'm' ? 1 : 0]; a[0] += m; a[1]++; });
   const cards = isDeck(b) ? lv.cards : [];
   const chips = cs => cs.filter(c=>by[c.id]).map(c=>`<span class="${by[c.id][0] < by[c.id][1] ? 'miss' : ''}"><b>${esc(c.short || c.id.replace(/^m/, ''))}</b> ${by[c.id][0]}/${by[c.id][1]}</span>`).join('');
-  const today = !cards.length ? '' : lv.tR ? `<div class="dk-today"><span class="side s0">Left</span>${chips(cards.filter(c=>!c.side))}</div><div class="dk-today"><span class="side s1">Right</span>${chips(cards.filter(c=>c.side))}</div>` : `<div class="dk-today">${chips(cards)}</div>`;
+  const today = !cards.length ? '' : lv.tR ? `<div class="dk-today">${sideChip(0)}${chips(cards.filter(c=>!c.side))}</div><div class="dk-today">${sideChip(1)}${chips(cards.filter(c=>c.side))}</div>` : `<div class="dk-today">${chips(cards)}</div>`;
+  const sides = lv.tR && sd[1][1] ? `<p class="lr">${sideChip(0, 1)} ${sd[0][0]}/${sd[0][1]}<span></span>${sideChip(1, 1)} ${sd[1][0]}/${sd[1][1]}</p>` : '';
+  const more = today + (isDeck(b) ? cardBars(b, lv) : '') + sideLine(b, lv);
   const allDone = blocksFor(rtLen).every(x=>stat(x, entryOf(curKey(), x.id)).done);
-  return `<div class="fin2"><div class="now fin"><div class="now-h"><span class="ok">${CHECK}Done</span></div><b class="now-t">${st.made} of ${st.max}</b>${rateBar(b, st)}</div>
-    ${sideLine(b, lv, e)}${levelLine(b, L, e)}${today}${isDeck(b) ? cardBars(b, lv) : ''}
-    ${nxt && !stat(nxt, entryOf(curKey(), nxt.id)).done ? `<button type="button" class="go" data-rbt="${nxt.id}" style="--bc:var(--b-${nxt.id})">Next: ${esc(nxt.name)}</button>` : `<button type="button" class="go" data-rtback>${allDone ? 'Session done: back to the routine' : 'Back to the routine'}</button>`}</div>`;
+  const go = nxt && !stat(nxt, entryOf(curKey(), nxt.id)).done ? `<button type="button" class="go" data-rbt="${nxt.id}">Next: ${esc(nxt.name)}</button>` : `<button type="button" class="go" data-rtback>${allDone ? 'Session done' : 'Back to the routine'}</button>`;
+  return `<div class="drill bp-sheet">${board(b, boardOf(b, e, lv, 'done'))}
+    <div class="txt bp-side"><div class="now fin"><div class="kh"><b>Done</b><span>target ${pct(b.rate)}</span></div>
+      <p class="now-t">${st.made}<small> / ${st.max}</small><em class="${r >= b.rate ? 'ok' : ''}">${st.tried ? pct(r) : ''}</em></p></div>
+      ${sides}<p class="climb">${hintFor(b, L, e)}</p>${go}
+      ${more ? fold('dn-' + b.id, 'By shot and side', more) : ''}</div></div>`;
 }
 function blockPage(b){
   const k = curKey(), list = blocksFor(rtLen), i = list.indexOf(b), e = entryOf(k, b.id), L = levelOf(b.id), lv = lvOf(b, L.lvl);
-  const step = stepOf(b, e), st = stat(b, e), live = step === 'play' || (e && !e.pre && (e.live || e.d.length > 0));
-  const nav = [['setup', 'Set up', true], ['play', 'Practice', live && !st.done], ['done', 'Done', st.done]];
-  const steps = nav.map(([id, t, can], n) => `<li${step === id ? ' class="on"' : ''}>${can && step !== id ? `<button type="button" data-rtstep="${b.id}:${id}"><span>${n + 1}</span>${t}</button>` : `<span class="st"${step === id ? ' aria-current="step"' : ''}><span>${n + 1}</span>${t}</span>`}</li>`).join('<i aria-hidden="true"></i>');
+  const step = stepOf(b, e), st = stat(b, e);
   const body = step === 'setup' ? setupStep(b, e, L, lv) : step === 'play' ? playStep(b, e, L, lv) : doneStep(b, e, L, lv, list[i + 1]);
-  return `<section class="rt rt-block" id="rb-${b.id}" data-rb="${b.id}" style="--bc:var(--b-${b.id})">
-    <div class="bp-top"><button type="button" class="bp-back" data-rtback><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 3L5 8l5 5"/></svg>Routine</button><span class="bp-of">${i + 1} of ${list.length}</span></div>
-    <h2 class="bp-name"><span class="rb-n">${st.done ? CHECK : i + 1}</span>${esc(b.name)}</h2>
-    <ol class="steps" aria-label="Steps">${steps}</ol>
+  const sub = step === 'play' ? `Level ${L.lvl} · ${lv.name}` : step === 'done' ? `Done · level ${L.lvl}` : `${minsOf(b, rtLen)} min`;
+  return `<section class="rt rt-block" id="rb-${b.id}" data-rb="${b.id}" data-step="${step}">
+    <button type="button" class="bp-back" data-rtback>${BACK}Routine</button>
+    <div class="sec-head bp-head"><span class="sec-num">${st.done ? CHECK : i + 1}</span><h2>${esc(b.name)}</h2><p>${esc(sub)}</p></div>
     ${body}
   </section>`;
 }
@@ -1581,41 +1539,30 @@ function overview(){
   const dl = lastT && prevT ? Math.round(100 * (rateOf(lastT) - rateOf(prevT))) : null;
   const set = new Set(ses), today = dayKey();
   const strip = Array.from({length:28},(_,i)=>{ const dk = dayKey(Date.now() - (27 - i) * 864e5); return `<i class="${set.has(dk) ? 'on' : ''}${dk === today ? ' today' : ''}" data-tip="${esc(fmtKey(dk))}${set.has(dk) ? ': trained' : ''}"></i>`; }).join('');
-  const step = x => `<li><b>${esc(x[0])}</b><span>${esc(x[1])}</span></li>`;
-  const lenBtn = l => `<button type="button" class="lenbtn" data-rtlen="${l}" aria-pressed="${rtLen===l}"><b>${LENS[l]}</b><small>${blocksFor(l).reduce((a,b)=>a + minsOf(b, l), 0)} min</small></button>`;
-  const bar = list.map((b, i) => `<button type="button" class="sb${sts[i].done ? ' done' : ''}" data-rbt="${b.id}" style="flex:${minsOf(b, rtLen)} 1 0;--bc:var(--b-${b.id})" aria-label="${esc(b.name)}" title="${esc(b.name)}"><i style="width:${(100 * (sts[i].done ? 1 : fracOf(b, entryOf(k, b.id)))).toFixed(1)}%"></i></button>`).join('');
-  // the one thing to do next, big
-  const ni = sts.findIndex(s=>!s.done), nb = list[ni];
-  const next = nb ? (() => { const e = entryOf(k, nb.id), live = e && !e.pre && e.d.length;
-    return `<button type="button" class="next" data-rbt="${nb.id}" style="--bc:var(--b-${nb.id})"><span class="rb-n">${ni + 1}</span><span class="next-t"><small>${live ? `Carry on, shot ${e.d.length + 1} of ${e.q.length}` : ni === 0 ? 'Start here' : 'Next up'}</small><b>${esc(nb.name)}</b></span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3l5 5-5 5"/></svg></button>`; })()
-    : (() => { const r = list.reduce((a,b)=>{ const st = stat(b, entryOf(k,b.id)); return [a[0] + st.made, a[1] + st.max]; }, [0,0]);
-      const moves = list.map(b=>[b, nextLevel(b.id), entryOf(k,b.id).lvl || 1]).filter(([b,n,l])=>n !== l).map(([b,n,l])=>`${esc(b.name)} goes ${n > l ? 'up' : 'down'} to level ${n}`);
-      return `<div class="rt-done" id="rt-done" role="status"><b>${CHECK} Session done</b><p>${r[0]} of ${r[1]} made today.${moves.length ? ' Next time: ' + moves.join(', ') + '.' : ' Same levels next time.'}</p></div>`; })();
-  const rows = list.map((b, i) => { const s = sts[i], e = entryOf(k, b.id);
-    return `<li class="rb${s.done ? ' done' : ''}" data-rb="${b.id}" id="rb-${b.id}" style="--bc:var(--b-${b.id})"><button type="button" class="rb-head" data-rbt="${b.id}"><span class="rb-n">${s.done ? CHECK : i + 1}</span><span class="rb-t"><b>${esc(b.name)}</b><span class="rb-m" aria-hidden="true"><i style="width:${(100 * (s.done ? 1 : fracOf(b, e))).toFixed(1)}%"></i></span></span><span class="rb-s"${s.tried ? ` title="${s.made} of ${s.tried}"` : ''}>${s.tried ? pct(rateOf(s)) : ''}</span></button></li>`; }).join('');
-  const progress = ses.length ? `<details class="card" data-fold="prog"${folds.prog === 'open' ? ' open' : ''}><summary><b>Your progress</b><span>${ses.length} ${ses.length === 1 ? 'session' : 'sessions'}, ${wk} in the last 7 days</span></summary><div class="kpis">
-      <div class="kpi"><span>Long straights</span><b>${lastT ? pct(rateOf(lastT)) : '-'}</b><small>${dl == null ? 'Last session' : dl > 0 ? `Up ${dl} points from last time` : dl < 0 ? `Down ${-dl} points from last time` : 'Same as last time'}</small></div>
-      <div class="kpi"><span>Last 7 days</span><b>${wk}</b><small>${wk >= 3 ? 'Good rhythm' : 'Aim for 3 or more'}</small></div>
+  const step = x => `<li><b>${esc(x[0])}</b> ${esc(x[1])}</li>`;
+  const minsFor = l => blocksFor(l).reduce((a,b)=>a + minsOf(b, l), 0);
+  const lenBtn = l => `<button type="button" data-rtlen="${l}" aria-pressed="${rtLen===l}">${LENS[l]} <small>${minsFor(l)}m</small></button>`;
+  // the next block to play is marked in the list; there is nothing else to press
+  const ni = sts.findIndex(s=>!s.done);
+  const rows = list.map((b, i) => { const s = sts[i], e = entryOf(k, b.id), live = !s.done && e && !e.pre && e.d.length;
+    const meta = s.done ? `${s.made}/${s.max} · ${pct(rateOf(s))}` : live ? `${e.d.length}/${e.q.length} · ${pct(rateOf(s))}` : `${minsOf(b, rtLen)} min`;
+    return `<li class="rb${s.done ? ' done' : ''}${i === ni ? ' next' : ''}" data-rb="${b.id}" id="rb-${b.id}"><button type="button" class="rb-head" data-rbt="${b.id}"><span class="rb-n">${s.done ? CHECK : i + 1}</span><span class="rb-t"><b>${esc(b.name)}</b><span class="rb-s"${s.tried ? ` title="${s.made} of ${s.tried}"` : ''}>${meta}</span></span>${i === ni ? `<span class="rb-go">${live ? 'Continue' : 'Start'}</span>` : `<span class="rb-c">${CHEV}</span>`}</button></li>`; }).join('');
+  const fin = ni >= 0 ? '' : (() => { const r = list.reduce((a,b)=>{ const st = stat(b, entryOf(k,b.id)); return [a[0] + st.made, a[1] + st.max]; }, [0,0]);
+    const moves = list.map(b=>[b, nextLevel(b.id), entryOf(k,b.id).lvl || 1]).filter(([b,n,l])=>n !== l).map(([b,n,l])=>`${esc(b.name)} goes ${n > l ? 'up' : 'down'} to level ${n}`);
+    return `<p class="rt-done" id="rt-done" role="status">${CHECK}<span><b>Session done.</b> ${r[0]} of ${r[1]} made.${moves.length ? ' Next time: ' + moves.join(', ') + '.' : ''}</span></p>`; })();
+  const progress = ses.length ? fold('prog', `Your progress · ${ses.length} ${ses.length === 1 ? 'session' : 'sessions'}, ${wk} this week`, `<div class="kpis">
+      <div class="kpi"><span class="kl">Long straights</span><b>${lastT ? pct(rateOf(lastT)) : '-'}</b><small>${dl == null ? 'Last session' : dl > 0 ? `Up ${dl} points from last time` : dl < 0 ? `Down ${-dl} points from last time` : 'Same as last time'}</small></div>
+      <div class="kpi"><span class="kl">Last 7 days</span><b>${wk}</b><small>${wk >= 3 ? 'Good rhythm' : 'Aim for 3 or more'}</small></div>
       <div class="kpi wide"><div class="tchart"><span class="kl">Long straight shots made, by session</span>${longChart()}</div><div><span class="kl">Last 4 weeks</span><div class="strip" aria-label="Days trained in the last 4 weeks">${strip}</div></div></div>
-    </div></details>` : '';
+    </div>`) : '';
+  const how = fold('how', 'How the routine works', `<p>${esc(RT.intro)}</p><ol class="rules">${RT.rules.map(step).join('')}</ol><p>${esc(RT.fixes)}</p>
+    <h4>Pre-shot routine</h4><ol class="rules">${RT.preshot.think.concat(RT.preshot.act).map(step).join('')}</ol><p>${esc(RT.preshot.decisions)}</p>
+    <h4>Finding a spot</h4><ol class="rules">${RT.howto.map(t=>`<li>${esc(t)}</li>`).join('')}</ol>`);
   return `<section class="rt rt-home">
-    <div class="rt-head">
-      <div class="lens" role="group" aria-label="Session length">${['short','daily','big'].map(lenBtn).join('')}</div>
-      <div class="sbar" role="group" aria-label="Today, ${doneN} of ${list.length} blocks done">${bar}</div>
-    </div>
-    ${next}
-    <ol class="rbs">${rows}</ol>
-    <div class="rt-more">
-    ${progress}
-    <details class="card psr" data-fold="psr"${folds.psr === 'open' ? ' open' : ''}><summary><b>Pre-shot routine</b><span>Ten steps, the same on every shot</span></summary>
-      <div class="psr-cols"><div><h4>Think, standing behind the shot</h4><ol>${RT.preshot.think.map(step).join('')}</ol></div><div><h4>Do, into the shot</h4><ol start="6">${RT.preshot.act.map(step).join('')}</ol></div></div>
-      <p class="psr-dec"><b>Three decisions</b>${esc(RT.preshot.decisions)}</p></details>
-    <details class="card" data-fold="rules"${folds.rules === 'open' ? ' open' : ''}><summary><b>The rules</b><span>How every block is played</span></summary>
-      <div class="rules"><p class="rules-intro">${esc(RT.intro)}</p><ol>${RT.rules.map(step).join('')}</ol><p>${esc(RT.fixes)}</p></div></details>
-    <details class="card" data-fold="howto"${folds.howto === 'open' ? ' open' : ''}><summary><b>Finding a spot</b><span>Along and up, by the diamonds</span></summary>
-      <div class="rules"><ol>${RT.howto.map(t=>`<li><span>${esc(t)}</span></li>`).join('')}</ol></div></details>
-    </div>
-    <p class="sync">${sync==='synced' ? 'Your reps and scores sync to your account.' : 'Your reps and scores are saved in this browser.'}</p>
+    <div class="rt-head"><div><h2 class="rt-h">Today</h2><p class="rt-sub">${doneN} of ${list.length} done · ${minsFor(rtLen)} min</p></div>
+      <div class="seg lens" role="group" aria-label="Session length">${['short','daily','big'].map(lenBtn).join('')}</div></div>
+    ${fin}<ol class="rbs">${rows}</ol>
+    <div class="rt-more">${progress}${how}<p class="sync">${sync==='synced' ? 'Saved to your account.' : 'Saved in this browser.'}</p></div>
   </section>`;
 }
 function rtView(){
@@ -1654,7 +1601,7 @@ function rtClick(e){
   const lv = t.closest('[data-lvset]');
   if (lv) {
     const [id, n] = lv.dataset.lvset.split(':'), L = levelOf(id), to = Math.max(1, Math.min(L.max, +n)); if (to === L.lvl) return true;
-    const en = rtEntry(id); en.lvl = to; redeal(RBy[id], en); rtSave(en); rtRedraw(); return true;
+    const en = rtEntry(id); en.lvl = to; redeal(RBy[id], en); rtSave(en); folds['lv-' + id] = 'closed'; rtRedraw(); return true;
   }
   const ds = t.closest('[data-dks]'); if (ds) { const id = ds.dataset.dks, en = rtEntry(id); delete en.pre; en.live = 1; delete rtStep[id]; rtSave(en); rtRedraw(); window.scrollTo({ top: 0 }); return true; }
   const dk = t.closest('[data-dk]'); if (dk) { const [id, m] = dk.dataset.dk.split(':'); deckShot(id, +m); rtRedraw(); const nb = document.querySelector(`#rb-${id} .dk-btn.ok`) || document.querySelector(`#rb-${id} .go`); if (nb) nb.focus({ preventScroll: true }); return true; }
