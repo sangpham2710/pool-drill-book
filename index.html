@@ -528,6 +528,14 @@ details.howplay .fold-b{color:var(--ink)}
 /* a side tag on the dark rail */
 .board .side{color:#fff;background:var(--side-0)}
 .board .side.s1{color:#fff;background:var(--side-1)}
+
+/* lay out the table: the row before block 1, and its page */
+.rbs > .lay + .rb{border-top:1px solid var(--rule)}
+.lay.next{box-shadow:inset 3px 0 0 var(--chalk)}
+.lay.done .rb-t b{color:var(--ink-2)}
+table.spots.lay td.for{white-space:nowrap;text-align:right}
+table.spots.lay td.for i{font:600 10.5px/1 var(--mono);font-style:normal;display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;background:var(--chalk-soft);color:var(--chalk);margin-left:3px}
+table.spots.lay th{white-space:nowrap}
 </style>
 
 </head>
@@ -1093,7 +1101,7 @@ const bySlug = new Map(drills.map(d => [d.slug, d]));
 const normQ = s => s.trim().toLowerCase();
 // a routine block's word in links: its link name if it has one (the pre-shot block is "preshot"), else its id
 const blockPath = id => (RBy[id] && RBy[id].link) || id;
-const blockOf = w => (w && RB.find(b => b.link === w || b.id === w) || {}).id || '';
+const blockOf = w => w === 'layout' ? 'layout' : (w && RB.find(b => b.link === w || b.id === w) || {}).id || '';
 
 // the view as plain values; pages.js and routine.js own the variables it reads
 function linkState(){
@@ -1599,7 +1607,7 @@ function setupPane(b, e, L, lv, i){
   // 2: where the donuts go, as pictures with the spots written on them
   const pics = lv.setup.map((s, k) => `<figure class="pic">${s.side != null ? `<figcaption>${sideChip(s.side, 1)}</figcaption>` : s.example ? '<figcaption><span class="kl">An example: any easy shots will do</span></figcaption>' : ''}<div class="board"><div class="svgwrap" data-rzs="${b.id}:${k}">${P.render(Object.assign({ title: b.name + ' setup' }, s.t), { text: textK() })}</div></div></figure>`).join('');
   const donuts = stepH(b.levels.length < 2 ? 1 : 2, lv.spots && lv.spots.length ? 'Put the donuts down' : 'Set up', lv.spots && lv.spots.length ? 'along · up, in diamonds' : '') +
-    (lv.spots && lv.spots.length ? '' : `<p class="setup-p">${esc(b.setup || '')}</p>`) + `<div class="pics${lv.setup.length > 1 ? ' two' : ''}">${pics}</div>`;
+    (lv.spots && lv.spots.length ? (layDone() ? '<p class="setup-p">Already down if you laid out the table: these are the ones this block uses.</p>' : '') : `<p class="setup-p">${esc(b.setup || '')}</p>`) + `<div class="pics${lv.setup.length > 1 ? ' two' : ''}">${pics}</div>`;
   // 3: the shots in this level, each as a picture
   const cards = isDeck(b) ? lv.cards : cardsOf(b, lv, e ? volOf(e) : vol());
   const shots = stepH(b.levels.length < 2 ? 2 : 3, 'The shots', isDeck(b) ? `${n} dealt in random order` : 'in this order') + `<div class="shots">${cards.map(c => `<button type="button" class="shot" data-rzc="${b.id}:${c.id}"><span class="thumb">${thumb(c.t)}</span><span class="shot-t">${c.side != null ? `<i class="dot s${c.side}"></i>` : ''}${esc(isDeck(b) ? (c.short || c.name) : c.name)}${!isDeck(b) && !c.check && c.reps > 1 ? ` <small>× ${c.reps}</small>` : ''}</span></button>`).join('')}</div>`;
@@ -1659,6 +1667,53 @@ function blockPage(b){
   return step === 'setup' ? setupPane(b, e, L, lv, i) : step === 'play' ? trainPane(b, e, L, lv, i) : donePane(b, e, L, lv, i, list[i + 1]);
 }
 
+
+/* ---------- lay out the table: every donut of today's session, once, before the first block ----------
+   The blocks share spots (the center spot, the 1, 2 and 3 up rows), so the whole session goes down in one go.
+   Donuts are flat: balls roll over them, so they all stay down while you play. */
+const fmtN = v => String(Math.round(v * 2) / 2);
+function layoutSpots(){
+  const out = new Map();
+  blocksFor(rtLen).forEach((b, i) => { const lv = lvOf(b, levelOf(b.id).lvl);
+    [...(lv.spots || []), ...(lv.spotsR || [])].filter(s => s.x != null && !/^Target/.test(s.name)).forEach(s => {
+      const key = s.x + ',' + s.y, o = out.get(key) || { x: s.x, y: s.y, n: [] }; if (!o.n.includes(i + 1)) o.n.push(i + 1); out.set(key, o); }); });
+  return [...out.values()];
+}
+const layDone = () => { const d = prog.rt.days[curKey()]; return !!(d && d.b && d.b._lay); };
+function layoutPic(S){
+  const cnt = (k, v) => S.filter(s => s[k] === v).length, refs = [], ticks = [], labels = [];
+  const ln = o => { if (!refs.some(r => r.x === o.x && r.y === o.y)) refs.push(o); };
+  S.forEach(s => {
+    const row = cnt('y', s.y) >= 3, col = !row && cnt('x', s.x) >= 3;
+    if (row) { ln({ y: s.y }); if (s.x % 1) ticks.push({ x: s.x }); } else if (col) { ln({ x: s.x }); if (s.y % 1) ticks.push({ y: s.y }); } else { ln({ x: s.x }); ln({ y: s.y }); }
+    const text = row ? fmtN(s.x) : col ? fmtN(s.y) : fmtN(s.x) + ' · ' + fmtN(s.y);
+    if (col) labels.push({ x: s.x + 0.2, y: s.y, text, size: 0.17, anchor: 'start' }); else labels.push({ x: s.x, y: s.y + (s.y > 3.4 ? -0.3 : 0.3), text, size: 0.17 });
+  });
+  return { numbers: true, refs, ticks, labels, positions: S.map(s => [s.x, s.y]) };
+}
+// the rows to put down, one line each: every "up" line with two or more donuts, then any donut left over
+function layoutRows(S){
+  const left = S.slice(), rows = [];
+  [...new Set(S.map(s => s.y))].sort((a, c) => c - a).forEach(y => { const r = left.filter(s => s.y === y); if (r.length < 2) return;
+    r.forEach(s => left.splice(left.indexOf(s), 1)); rows.push([`${fmtN(y)} up`, 'along ' + r.map(s => s.x).sort((a, c) => a - c).map(fmtN).join(', '), [...new Set(r.flatMap(s => s.n))].sort((a, c) => a - c)]); });
+  left.forEach(s => rows.push([`${fmtN(s.x)} · ${fmtN(s.y)}`, 'one donut', s.n]));
+  return rows;
+}
+function layoutPage(){
+  const S = layoutSpots(), list = blocksFor(rtLen);
+  const rows = layoutRows(S).map(([a, b, n]) => `<tr><th scope="row">${esc(a)}</th><td>${esc(b)}</td><td class="for">${n.map(x => `<i>${x}</i>`).join('')}</td></tr>`).join('');
+  return `<section class="rt rt-block rt-setup" id="rb-layout" data-rb="layout" data-step="setup">
+    <button type="button" class="bp-back" data-rtback>${BACK}Routine</button>
+    <div class="sec-head bp-head"><span class="sec-num">0</span><h2>Lay out the table</h2><p>${S.length} donuts for all ${list.length} blocks, put down once</p></div>
+    ${stepH(1, 'Every donut of today', 'along · up, in diamonds')}
+    <div class="pics"><figure class="pic"><div class="board"><div class="svgwrap" data-rzl="1">${P.render(Object.assign({ title: 'All donuts for today' }, layoutPic(S)), { text: textK() })}</div></div></figure></div>
+    ${stepH(2, 'Row by row', 'numbers: the blocks that use it')}
+    <table class="spots lay"><tbody>${rows}</tbody></table>
+    <p class="setup-p">For a straight row: lay a cue on the line from the diamond on one rail to the same diamond on the other, and set the donuts along it.</p>
+    <div class="startbar"><button type="button" class="go" data-rtlay>${layDone() ? 'Go to block 1' : 'Done, the table is laid out'}</button></div>
+  </section>`;
+}
+
 /* ---------- the overview ---------- */
 function overview(){
   const k = curKey(), list = blocksFor(rtLen), sts = list.map(b=>stat(b, entryOf(k, b.id))), doneN = sts.filter(s=>s.done).length;
@@ -1672,11 +1727,11 @@ function overview(){
   const minsFor = l => blocksFor(l).reduce((a,b)=>a + minsOf(b, l), 0);
   const lenBtn = l => `<button type="button" data-rtlen="${l}" aria-pressed="${rtLen===l}">${LENS[l]} <small>${minsFor(l)}m</small></button>`;
   // the next block to play is marked in the list; there is nothing else to press
-  const ni = sts.findIndex(s=>!s.done);
+  const ni0 = sts.findIndex(s=>!s.done), ni = !layDone() && !sts.some(x => x.started) ? -2 : ni0;
   const rows = list.map((b, i) => { const s = sts[i], e = entryOf(k, b.id), live = !s.done && e && !e.pre && e.d.length;
     const meta = s.done ? `${s.made}/${s.max} · ${pct(rateOf(s))}` : live ? `${e.d.length}/${e.q.length} · ${pct(rateOf(s))}` : `${minsOf(b, rtLen)} min`;
     return `<li class="rb${s.done ? ' done' : ''}${i === ni ? ' next' : ''}" data-rb="${b.id}" id="rb-${b.id}"><button type="button" class="rb-head" data-rbt="${b.id}"><span class="rb-n">${s.done ? CHECK : i + 1}</span><span class="rb-t"><b>${esc(b.name)}</b><span class="rb-s"${s.tried ? ` title="${s.made} of ${s.tried}"` : ''}>${meta}</span></span>${i === ni ? `<span class="rb-go">${live ? 'Continue' : 'Start'}</span>` : `<span class="rb-c">${CHEV}</span>`}</button></li>`; }).join('');
-  const fin = ni >= 0 ? '' : (() => { const r = list.reduce((a,b)=>{ const st = stat(b, entryOf(k,b.id)); return [a[0] + st.made, a[1] + st.max]; }, [0,0]);
+  const fin = ni0 >= 0 ? '' : (() => { const r = list.reduce((a,b)=>{ const st = stat(b, entryOf(k,b.id)); return [a[0] + st.made, a[1] + st.max]; }, [0,0]);
     const moves = list.map(b=>[b, nextLevel(b.id), entryOf(k,b.id).lvl || 1]).filter(([b,n,l])=>n !== l).map(([b,n,l])=>`${esc(b.name)} goes ${n > l ? 'up' : 'down'} to level ${n}`);
     return `<p class="rt-done" id="rt-done" role="status">${CHECK}<span><b>Session done.</b> ${r[0]} of ${r[1]} made.${moves.length ? ' Next time: ' + moves.join(', ') + '.' : ''}</span></p>`; })();
   const progress = ses.length ? fold('prog', `Your progress · ${ses.length} ${ses.length === 1 ? 'session' : 'sessions'}, ${wk} this week`, `<div class="kpis">
@@ -1690,7 +1745,7 @@ function overview(){
   return `<section class="rt rt-home">
     <div class="rt-head"><div><h2 class="rt-h">Today</h2><p class="rt-sub">${doneN} of ${list.length} done · ${minsFor(rtLen)} min</p></div>
       <div class="seg lens" role="group" aria-label="Session length">${['short','daily','big'].map(lenBtn).join('')}</div></div>
-    ${fin}<ol class="rbs">${rows}</ol>
+    ${fin}<ol class="rbs"><li class="lay${layDone() ? ' done' : ni === -2 ? ' next' : ''}" data-rb="layout"><button type="button" class="rb-head" data-rbt="layout"><span class="rb-n">${layDone() ? CHECK : 0}</span><span class="rb-t"><b>Lay out the table</b><span class="rb-s">${layoutSpots().length} donuts, once for the session</span></span>${ni === -2 ? '<span class="rb-go">Start</span>' : `<span class="rb-c">${CHEV}</span>`}</button></li>${rows}</ol>
     <div class="rt-more">${progress}${how}${sts.some(s => s.started) ? `<button type="button" class="ghostbtn small" data-rtday>${rtArm === 'day' ? 'Tap again to start today over' : 'Start today over'}</button>` : ''}<p class="sync">${sync==='synced' ? 'Saved to your account.' : 'Saved in this browser.'}</p></div>
   </section>`;
 }
@@ -1699,6 +1754,7 @@ function rtView(){
   // today's entries: old set counts become shots, and a deck whose level changed shape is dealt again
   list.forEach(b => { const e = entryOf(k, b.id); if (!e) return; upgrade(b, e); const lv = lvOf(b, e.lvl); if (!isDeck(b) || !e.q) return;
     const ids = new Set(lv.cards.map(c=>c.id)), old = e.q.slice(e.d.length).some(id => !ids.has(id)), oneSided = lv.tR && !e.q.some(id => String(id)[0] === 'm'); if (old || oneSided) redeal(b, e); });
+  if (rtOpen === 'layout') return layoutPage();
   return rtOpen && RBy[rtOpen] && list.some(b=>b.id===rtOpen) ? blockPage(RBy[rtOpen]) : overview();
 }
 
@@ -1735,6 +1791,8 @@ function rtClick(e){
   // start over needs a second tap; on the training screen it deals again and carries straight on
   const rs = t.closest('[data-rtreset]');
   if (rs) { const [id, live] = rs.dataset.rtreset.split(':'); if (armed('r:' + rs.dataset.rtreset)) { freshEntry(id, !!live); if (!live) rtStep[id] = 'setup'; } rtRedraw(); return true; }
+  const ly = t.closest('[data-rtlay]'); if (ly) { const k = touch(), day = prog.rt.days[k] || (prog.rt.days[k] = { b: {} }); if (!day.b._lay) { day.b._lay = { lay: 1, ts: Date.now() }; day.ts = Date.now(); saveLocal(); saveRemote(); } rtGo(blocksFor(rtLen)[0].id); return true; }
+  const zl = t.closest('[data-rzl]'); if (zl) { zoomed = { name: 'All donuts for today', t: layoutPic(layoutSpots()) }; document.getElementById('zt').textContent = 'All donuts for today'; drawZoom(); openDlg(zd); return true; }
   const fi = t.closest('[data-rtfin]'); if (fi) { const en = rtEntry(fi.dataset.rtfin); en.fin = 1; rtSave(en); rtRedraw(); window.scrollTo({ top: 0 }); return true; }
   const ag = t.closest('[data-rtagain]'); if (ag) { againEntry(ag.dataset.rtagain); delete rtStep[ag.dataset.rtagain]; rtRedraw(); window.scrollTo({ top: 0 }); return true; }
   const rd = t.closest('[data-rtday]'); if (rd) { if (armed('day')) { const day = prog.rt.days[curKey()]; Object.keys((day && day.b) || {}).forEach(id => { if (RBy[id]) freshEntry(id, false); }); } rtRedraw(); return true; }
